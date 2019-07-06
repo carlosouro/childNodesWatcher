@@ -9,8 +9,8 @@ describe('urCapture', function () {
     it('should be able to setup add listener', function () {
         
 
-        window.urCapture.watchForAddedElements('.class1', function(el){
-            addedClass1Callback(el)
+        window.urCapture.watchForAddedElements('.class1', function(){
+            addedClass1Callback(this)
         })
 
         //checks internal consistency
@@ -91,8 +91,8 @@ describe('urCapture', function () {
     });
 
     it('should be able to detect removed elements', function (done) {
-        window.urCapture.watchForRemovedElements('.class1', function(el){
-            removedClass1Callback(el)
+        window.urCapture.watchForRemovedElements('.class1', function(){
+            removedClass1Callback(this)
         })
 
         //checks internal consistency
@@ -126,8 +126,8 @@ describe('urCapture', function () {
     });
 
     it('should be able to detect removed elements (2)', function (done) {
-        window.urCapture.watchForRemovedElements('.class2', function(el){
-            removedClass2Callback(el)
+        window.urCapture.watchForRemovedElements('.class2', function(){
+            removedClass2Callback(this)
         })
 
         //checks internal consistency
@@ -163,8 +163,8 @@ describe('urCapture', function () {
 
     it('should be able to fire multiple removed callbacks for multiple selectors', function (done) {     
 
-        window.urCapture.watchForRemovedElements('.class1', function(el){
-            removedClass1Callback2(el)
+        window.urCapture.watchForRemovedElements('.class1', function(){
+            removedClass1Callback2(this)
         })
 
         var resolve1, resolve2, resolve3
@@ -201,12 +201,12 @@ describe('urCapture', function () {
 
     it('should be able to fire multiple added callbacks for multiple selectors on multiple elements', function (done) {     
 
-        window.urCapture.watchForAddedElements('.class1', function(el){
-            addedClass1Callback2(el)
+        window.urCapture.watchForAddedElements('.class1', function(){
+            addedClass1Callback2(this)
         })
 
-        window.urCapture.watchForAddedElements('.class2', function(el){
-            addedClass2Callback(el)
+        window.urCapture.watchForAddedElements('.class2', function(){
+            addedClass2Callback(this)
         })
         
 

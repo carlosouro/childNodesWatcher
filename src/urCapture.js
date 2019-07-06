@@ -109,7 +109,7 @@
                 callbacks = addedCallbackStack[selector] || []
                 callbacksLength = callbacks.length
                 for (j=0; j<callbacksLength; j++) {
-                    callbacks[j](el)
+                    callbacks[j].call(el)
                 }
             }
         }
@@ -155,7 +155,7 @@
                 callbacks = removedCallbackStack[elementSelectors[i]] || []
                 callbacksLength = callbacks.length
                 for (j=0; j<callbacksLength; j++) {
-                    callbacks[j](el)
+                    callbacks[j].call(el)
                 }
             }
         }
