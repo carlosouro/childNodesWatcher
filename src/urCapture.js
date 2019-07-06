@@ -6,8 +6,6 @@
         window.console && window.console.error('Attempting to redefine urCapture helper module')
     }
 
-    var ElementMatchesFn = 'matches'
-
     //--- helper - start observing the whole DOM ---
     //observer patterns: MutationObserver / Mutation Events
     var isObserving = false
@@ -71,14 +69,14 @@
     var matchedElementsInDOMMatchedSelectors = []  // [[<selector1-1>, ...], [<selector2-1>, ...], ...]
 
     //callback handlers holders (for quick triggering based of matched selector)
-    var addedCallbackStack = [] // { "<selector>": [<callkback1>, ...]}
-    var removedCallbackStack = [] // { "<selector>": [<callkback1>, ...]}
+    var addedCallbackStack = {} // { "<selector>": [<callkback1>, ...]}
+    var removedCallbackStack = {} // { "<selector>": [<callkback1>, ...]}
 
     //-- add/remove handlers --
     function addedNode(el){
         
         //ignore non Elements
-        if (typeof el[ElementMatchesFn] === 'undefined') {
+        if (typeof el.matches !== 'function') {
             return;
         }
 
@@ -87,17 +85,18 @@
 
         //try to match any of our added/removed known selectors
         var matchedSelectors = []
-        var length = selectors.length
+        var length = selectors.length;
         for (var i=0; i<length; i++) {
             selector = selectors[i]
             //Note: at scale, probably our performance bottleneck would be here
             //it is possible to improve, but very complex
-            if( el[ElementMatchesFn](selector) ){
+            if( el.matches(selector) ){
                 //store it for elementsInDOM/elementsInDOMMatchedSelectors consistency resolution
                 matchedSelectors.push(selector)
 
                 //subloop: trigger 'added' callbacks (if any)
                 callbacks = addedCallbackStack[selector] || []
+                callbacksLength = callbacks.length
                 for (j=0; j<callbacksLength; j++) {
                     callbacks[j](el)
                 }
