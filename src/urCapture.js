@@ -27,14 +27,14 @@
                     nodes = mutation.addedNodes
                     nodeListLength = nodes.length
                     for(var j = 0; j<nodeListLength; j++) {
-                        addedNode(nodes[j])
+                        addedNodeTree(nodes[j])
                     }
 
                     //check removed nodes
                     nodes = mutation.removedNodes
                     nodeListLength = nodes.length
                     for(var j = 0; j<nodeListLength; j++) {
-                        removedNode(nodes[j])
+                        removedNodeTree(nodes[j])
                     }
 
                 }
@@ -46,10 +46,10 @@
         } else {
             //create mutation observer for document added/removed elements and start it
             document.addEventListener('DOMNodeInserted', function(e){
-                addedNode(e.target)
+                addedNodeTree(e.target)
             })
             document.addEventListener('DOMNodeRemoved', function(e){
-                removedNode(e.target)
+                removedNodeTree(e.target)
             })
         }
 
@@ -73,6 +73,17 @@
     var removedCallbackStack = {} // { "<selector>": [<callkback1>, ...]}
 
     //-- add/remove handlers --
+    function addedNodeTree(el){
+        //walk the node tree and add every node
+        addedNode(el)
+
+        //progress through children
+        var node = el.firstChild;
+        while (node) {
+            addedNodeTree(node);
+            node = node.nextSibling;
+        }
+    }
     function addedNode(el){
         
         //ignore non Elements
@@ -107,6 +118,17 @@
         if(matchedSelectors.length>0) {
             matchedElementsInDOM.push(el)
             matchedElementsInDOMMatchedSelectors.push(matchedSelectors)
+        }
+    }
+    function removedNodeTree(el){
+        //walk the node tree and add every node
+        removedNode(el)
+
+        //progress through children
+        var node = el.firstChild;
+        while (node) {
+            removedNodeTree(node);
+            node = node.nextSibling;
         }
     }
     function removedNode(el){

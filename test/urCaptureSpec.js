@@ -231,33 +231,27 @@ describe('urCapture', function () {
         })
 
         addedClass1Callback = function(e){
-            console.log('addedClass1Callback: element3')
             assert.equal(element3,e)
             resolve1()
             addedClass1Callback = function(e){
-                console.log('addedClass1Callback: element1')
                 assert.equal(element1,e)
                 resolve2()
             }
         }
 
         addedClass1Callback2 = function(e){
-            console.log('addedClass1Callback2: element3')
             assert.equal(element3,e)
             resolve3()
             addedClass1Callback2 = function(e){
-                console.log('addedClass1Callback2: element1')
                 assert.equal(element1,e)
                 resolve4()
             } 
         }
 
         addedClass2Callback = function(e){
-            console.log('addedClass2Callback: element3')
             assert.equal(element3,e)
             resolve5()  
             addedClass2Callback = function(e){
-                console.log('addedClass2Callback: element2')
                 assert.equal(element2,e)
                 resolve6()  
             }
@@ -268,5 +262,75 @@ describe('urCapture', function () {
 
         //add all the elements
         document.body.appendChild(element3)
+    });
+
+    it('should be able to fire multiple removed callbacks for multiple selectors on multiple elements', function (done) {     
+        
+        var resolve1, resolve2, resolve3,
+        resolve4, resolve5, resolve6
+        Promise.all([
+            new Promise(function(resolve){resolve1 = resolve}),
+            new Promise(function(resolve){resolve2 = resolve}),
+            new Promise(function(resolve){resolve3 = resolve}),
+            new Promise(function(resolve){resolve4 = resolve}),
+            new Promise(function(resolve){resolve5 = resolve}),
+            new Promise(function(resolve){resolve6 = resolve})
+        ]).then(function(){
+            //checks internal consistency
+            assert.equal(window.urCapture.internalState.matchedElementsInDOM.length, 0)
+            assert.equal(window.urCapture.internalState.matchedElementsInDOMMatchedSelectors.length, 0)
+
+            assert.equal(window.urCapture.internalState.selectors.length, 2)
+
+            assert.equal(Object.keys(window.urCapture.internalState.addedCallbackStack).length, 2)
+            assert.equal(Object.keys(window.urCapture.internalState.removedCallbackStack).length, 2)
+
+            assert.equal(window.urCapture.internalState.selectors[0], '.class1')
+            assert.equal(window.urCapture.internalState.selectors[1], '.class2')
+
+            assert.notEqual(window.urCapture.internalState.addedCallbackStack['.class1'], undefined)
+            assert.equal(window.urCapture.internalState.addedCallbackStack['.class1'].length, 2)
+
+            assert.notEqual(window.urCapture.internalState.addedCallbackStack['.class2'], undefined)
+            assert.equal(window.urCapture.internalState.addedCallbackStack['.class2'].length, 1)
+
+            assert.notEqual(window.urCapture.internalState.removedCallbackStack['.class1'], undefined)
+            assert.equal(window.urCapture.internalState.removedCallbackStack['.class1'].length, 2)
+
+            assert.notEqual(window.urCapture.internalState.removedCallbackStack['.class2'], undefined)
+            assert.equal(window.urCapture.internalState.removedCallbackStack['.class2'].length, 1)
+
+            done()
+        })
+
+        removedClass1Callback = function(e){
+            assert.equal(element3,e)
+            resolve1()
+            removedClass1Callback = function(e){
+                assert.equal(element1,e)
+                resolve2()
+            }
+        }
+
+        removedClass1Callback2 = function(e){
+            assert.equal(element3,e)
+            resolve3()
+            removedClass1Callback2 = function(e){
+                assert.equal(element1,e)
+                resolve4()
+            } 
+        }
+
+        removedClass2Callback = function(e){
+            assert.equal(element3,e)
+            resolve5()  
+            removedClass2Callback = function(e){
+                assert.equal(element2,e)
+                resolve6()  
+            }
+        }
+
+        //add all the elements
+        document.body.removeChild(element3)
     });
 });
