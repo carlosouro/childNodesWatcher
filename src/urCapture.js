@@ -198,7 +198,7 @@
                         //(could have been matched by some other 'added' selector),
                         //in this case we need to add it to matchedElementsInDOMMatchedSelectors
                         if(typeof addedCallbackStack[selector] === 'undefined'){
-                            matchedElementsInDOMMatchedSelectors[j].push(selector)
+                            matchedElementsInDOMMatchedSelectors[matchedIndex].push(selector)
                         }
                     } else {
                         //never matched, let's add it to the cache for watching removal
