@@ -21,4 +21,5 @@ please use [Convetional Commits](https://www.conventionalcommits.org) to enable 
 `npm test` (via local Chrome)
 
 ### Release/versioning
+`npm run dist` (generates minified dist/urCapture.js from source)
 `npm run release` (auto-generates version, git tag and [CHANGELOG.md](./CHANGELOG.md))

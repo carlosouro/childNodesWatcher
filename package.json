@@ -5,6 +5,7 @@
   "main": "src/urCapture.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run",
+    "dist": "./node_modules/uglify-js/bin/uglifyjs src/urCapture.js -c -m -o  dist/urCapture.js",
     "release": "standard-version"
   },
   "repository": {
@@ -24,6 +25,7 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-mocha": "^1.3.0",
     "mocha": "^6.1.4",
-    "standard-version": "^6.0.1"
+    "standard-version": "^6.0.1",
+    "uglify-js": "^3.6.0"
   }
 }
