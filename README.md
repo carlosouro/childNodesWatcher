@@ -2,7 +2,7 @@
 
 Provides helper methods for `test` and `test`.
 [Minimum compatibility](https://caniuse.com/#feat=mutation-events) provided via [Mutation Events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mutation_events).
-[Optimal compatibility] (https://caniuse.com/#feat=mutationobserver) via [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
+[Optimal compatibility](https://caniuse.com/#feat=mutationobserver) via [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
 
 ## Plain quick usage
 Run provided `example/watch.html`
