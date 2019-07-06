@@ -1,6 +1,6 @@
 {
   "name": "childnodeswatcher",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "watches nodes added/removed from an HTML Node",
   "main": "src/urCapture.js",
   "scripts": {
